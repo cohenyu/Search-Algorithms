@@ -35,7 +35,7 @@ public:
 
     /*
      * this method check if some problem exist in the file
-     * return true if the problem exsit 'falsw otherwise
+     * return true if the problem exsit false otherwise
      */
     bool isProblemExist(P problem) override{
         return (this->pAndS.find(problem) != pAndS.end());

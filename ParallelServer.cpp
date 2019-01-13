@@ -37,13 +37,20 @@ using namespace std;
 //        pthread_join(it, NULL);
 //    }
 //}
+void server_side::ParallelServer::stop() {
+    GeneralServer::stop();
+    while (!threads_queue.empty())  {
+        threads_queue.front().join();
+        threads_queue.pop();
+    }
+
+}
 static void handleClient(int clientSocket,  ClientHandler* c){
     c->handleClient(clientSocket);
 }
 
 void server_side::ParallelServer::handle(int clientSocket, ClientHandler &c) {
-    thread t(handleClient, clientSocket, &c);
-    t.detach();
+    threads_queue.push(thread(handleClient, clientSocket, &c));
 }
 
 

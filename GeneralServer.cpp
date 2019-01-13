@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <memory.h>
 #include <unistd.h>
+#include <cerrno>
 #include <thread>
 #include <iostream>
 #include "GeneralServer.h"
@@ -38,6 +39,8 @@ void server_side::GeneralServer::open(int port, ClientHandler &c) {
     serv_addr.sin_port = htons(port);
 
 
+    int n = 1;
+    setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &n, sizeof(int));
     /* Now bind the host address using bind() call.*/
     if (bind(serverSocket, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
         perror("ERROR on binding");
@@ -82,18 +85,38 @@ void server_side::GeneralServer::start(int serverSocket, ClientHandler &c) {
     int newsockfd, clilen;
     struct sockaddr_in cli_addr;
     clilen = sizeof(cli_addr);
-
+    timeval timeout;
+    timeout.tv_usec = 0;
     while (true) {
         /* Accept actual connection from the client */
+        timeout.tv_sec = 0;
         newsockfd = accept(serverSocket, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
 
         if (newsockfd < 0) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK)    {
+                break;
+            }
             perror("ERROR on accept");
             exit(1);
         }
 
+        if (setsockopt(newsockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)   {
+            perror("error on set timeout");
+            exit(1);
+        }
+
+
         handle(newsockfd,c);
+        timeout.tv_sec = 10;
+
+        if (setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)   {
+            perror("error on set timeout");
+            exit(1);
+        }
+
     }
+
+    stop();
 }
 /*
  * the constructor of general server

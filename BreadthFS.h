@@ -60,17 +60,20 @@ vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {
          * to the queueBfs.
          *
          */
-        list<State<Node>*> possibleStates = searchable->getPossibleStates(curS);
+        //todo
+        vector<State<Node>*> possibleStates = searchable->getPossibleStates(curS);
 
         //run over the possibleStates
-        for (State<Node>* node:possibleStates ){
+        for (int i = 0; i < possibleStates.size(); i++) {
             //if the one of the possible state is not marked
-            if(!node->getIsMarked()){
-                node->setIsMarked(true);
-                node->setCameFrom(curS);
-                queueBfs.push(node);
+            State<Node>* temp = possibleStates[i];
+            if(!temp->getIsMarked()){
+                temp->setIsMarked(true);
+                temp->setCameFrom(curS);
+                queueBfs.push(temp);
             }
         }
+
     }
     //retrurn a vector of states that represent the path
     return (findPath(searchable->getGoalState()));

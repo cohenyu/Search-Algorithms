@@ -15,7 +15,10 @@
 #include "SocketCommunication.h"
 #include "MatrixSolver.h"
 #include "Matrix.h"
-
+/*
+ * this class represent a kind of ClientHandler.
+ * the class MatrixClientHandler is inherit from ClientHandler,and responsible
+ */
 class MatrixClientHandler : public ClientHandler{
     //Solver< Searchable<Point>*, string>* solver;
     CacheManager<Matrix, string>* cm;

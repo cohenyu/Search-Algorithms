@@ -35,51 +35,71 @@ public:
         this->cols = matrix[0].size();
     }
 
+    /*
+     * this method return the init state
+     */
     State<Point>* getInitState() const override {
         return this->initState;
     }
 
+    /*
+     * this method return the goal state
+     */
     State<Point>* getGoalState() const override{
         return this->goalState;
     }
 
+    /*
+     * this method return the cost of the point
+     */
     double getCostOfPoint(Point p){
         return matrix[p.getI()][p.getJ()]->getCost();
     }
-
+    /*
+     * this method get a point and return the state of the point
+     */
     State<Point>* getStateAtPoint(Point p){
         return matrix[p.getI()][p.getJ()];
     }
 
-
+    /*
+     * this method get a state of point and check for the adjacent of the point
+     * if the cost of some adjacent is -1 we cant pass through this point
+     * we also check if the adjacent are in the matrix range
+     */
     vector<State<Point> *> getPossibleStates(State<Point> *state) override {
         int IPoint = state->getCurState().getI();
         int JPoint = state->getCurState().getJ();
         vector<State<Point>*> possibleStates;
 
+        //if the point is in the range
         if (!(IPoint >= 0 && IPoint<= cols-1 && JPoint >= 0 && JPoint <= rows-1)){
             perror("Point is out of range");
             exit(1);
         }
-
+        //if the point,at i index, is not in the first line we have upState
         if (IPoint != 0){
             State<Point>* upState = getStateAtPoint(Point(IPoint-1, JPoint));
+            //if the cost is not -1
             if ( upState->getCost() != INF){
                 possibleStates.push_back(upState);
             }
         }
+        //if the point,at index j,is not the most left we have leftState
         if(JPoint != 0){
             State<Point>* leftState = getStateAtPoint(Point(IPoint, JPoint-1));
             if (leftState->getCost() != INF){
                 possibleStates.push_back(leftState);
             }
         }
+        //if the point,at index j,is not the last column we have rightState
         if (JPoint != cols -1){
             State<Point>* rightState = getStateAtPoint(Point(IPoint, JPoint +1));
             if(rightState->getCost() != INF){
                 possibleStates.push_back(rightState);
             }
         }
+        //if the point,at i index, is not in the lowest line we have downState
         if (IPoint != this->rows -1){
             State<Point>* downState = getStateAtPoint(Point(IPoint +1, JPoint));
             if (downState->getCost() != INF) {
@@ -92,6 +112,14 @@ public:
         return possibleStates;
     }
 
+
+    /*
+     * this method convert a matrix to string .fisrt we write the i,j of the init point,than we have separated |
+     * and after that we write the i,j of the goal point.after the init and the goal state we put :
+     * than we write all the values that are separated with comma.each line in the matrix are separated with |
+     * after we finish to write the matrix we put $ in order to separate the problem=matrix ,from the solution.
+     * after the $ we write the string that represent the path of the solution
+     */
     operator std::string() const override{
         string str;
         str += to_string(initState->getCurState().getI()) + ',' + to_string(initState->getCurState().getJ());

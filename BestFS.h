@@ -25,39 +25,49 @@
 
 template <class Node>
 class BestFS : public Searcher<Node>{
+
+    class StateComparator{
+    public:
+        bool operator()(State<Node>* left, State<Node>* right){
+            return (left->getTotalCost() > right->getTotalCost());
+        }
+    };
+
 public:
     vector<State<Node>> search(Searchable<Node> *searchable) override {
 
-        priority_queue<State<Node>> pQueueOpen;
-        pQueueOpen.push(searchable->getInitState());
-        unordered_set<State<Node>> uSetClose;
-        vector<State<Node>> path;
-        while (!pQueueOpen.empty()){
-            State<Node> openTop = pQueueOpen.top();
-            pQueueOpen.pop();
-            uSetClose.insert(openTop);
+        State<Node>* curS =searchable->getInitState();
+        //the end state
+        State<Node>* endS =searchable->getGoalState();
 
-            if (!openTop.equals(searchable->getGoalState())){
+        priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> openPQueue;
+        openPQueue.push(curS);
+        curS->setTotalCost(curS->getCost());
 
-                for(State<Node> adjNode: searchable->getPossibleStates(openTop)){
-                    if (adjNode.getIsMarked() && uSetClose.count(adjNode) != 0){
-                        adjNode.setCameFrom(&openTop);
-                        pQueueOpen.push(adjNode);
-                        adjNode.setIsMarked(true);
-                    }
-                }
-
-            } else {
-
-                while (!openTop.equals(searchable->getInitState())){
-                    openTop = openTop.getCameFrom();
-                    path.insert(path.begin(), openTop);
-                }
-                return path;
+        while (!openPQueue.empty()){
+            curS = openPQueue.top();
+            openPQueue.pop();
+            curS->setIsMarked(true);
+            if(curS->equals(endS)){
+                break;
             }
+
+            vector<State<Node>*> possibleStates = searchable->getPossibleStates(curS);
+            long upToCost = curS->getTotalCost();
+            for (int i = 0; i < possibleStates.size(); i++) {
+                State<Node>* adj = possibleStates[i];
+                long adjFutureTotalCost = adj->getCost() + upToCost;
+                // if the total cost is -1- we didnt get to thus node yet;
+                if(adj->getTotalCost() == -1 || adj->getTotalCost() > adjFutureTotalCost){
+                    adj->setCameFrom(curS);
+                    adj->setTotalCost(adjFutureTotalCost);
+                    openPQueue.emplace(adj);
+                }
+
+            }
+
         }
-        //TODO or empty vector
-        return nullptr;
+        return findPath(searchable->getGoalState());
     }
 
 };

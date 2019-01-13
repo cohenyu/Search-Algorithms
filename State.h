@@ -7,7 +7,8 @@ class State {
     T curState;
     int cost;
     State<T> *cameFrom;
-    bool isMarked{};
+    bool isMarked;
+    long totalCost;
 
 public:
 
@@ -16,6 +17,7 @@ public:
         this->cost = cost;
         this->cameFrom = nullptr;
         this->isMarked=false;
+        this->totalCost  = -1;
     }
 
     State<T>(T state):curState(state){
@@ -59,6 +61,13 @@ public:
         return this->isMarked;
     }
 
+    long getTotalCost(){
+        return this->totalCost;
+    }
+
+    void setTotalCost(long upToCost){
+        this->totalCost = upToCost;
+    }
 
     bool operator==(const State<T> &other)const{
          return this->getCost() == other.getCost();

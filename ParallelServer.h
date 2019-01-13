@@ -6,19 +6,22 @@
 #define EX2_PARALLELCLIENT_H
 
 #include <vector>
+#include <thread>
+#include <queue>
 #include "GeneralServer.h"
 
 using namespace std;
 
 namespace server_side {
     class ParallelServer : public GeneralServer {
+        queue<thread> threads_queue;
     protected:
         void handle(int clientSocket, ClientHandler &c) override;
 
 //        vector<pthread_t> threads;
 //    protected:
 //        void handle(int clientSocket, ClientHandler &c) override;
-//
+            void stop() override;
 //        void handleStop() override;
     };
 }
