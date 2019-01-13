@@ -9,7 +9,11 @@
 #include <cstdlib>
 
 #define INF -1
-
+/*
+ * This class represent a matrix,its heir from searchable.
+ * for each matrix have a init and goal points,and number of row and col
+ * each cell is State of Point
+ */
 using namespace std;
 class Matrix: public Searchable<Point>{
     State<Point>* initState;
@@ -20,6 +24,9 @@ class Matrix: public Searchable<Point>{
 
 public:
 
+    /*
+     * the constractor of Matrix
+     */
     Matrix(vector<vector<State<Point>*>> matrix, Point init, Point goal){
         this->matrix = matrix;
         this->initState = getStateAtPoint(init);

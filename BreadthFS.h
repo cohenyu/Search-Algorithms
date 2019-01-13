@@ -11,7 +11,7 @@
 using  namespace std;
 
 /*
- * this class represent a BFS that is hind of search algorithm that heir from Searcher
+ * this class represent a BFS that is kind of search algorithm that heir from Searcher
  *
  */
 template <class Node>
@@ -72,6 +72,7 @@ vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {
             }
         }
     }
+    //retrurn a vector of states that represent the path
     return (findPath(searchable->getGoalState()));
 
 

@@ -13,6 +13,9 @@ using namespace std;
 using namespace std::chrono;
 using namespace std::chrono::_V2;
 
+/*
+ * this method open the communication with the celint on the port its got  and listen to the client by the way its got
+ */
 void server_side::GeneralServer::open(int port, ClientHandler &c) {
 
     int serverSocket;
@@ -42,14 +45,16 @@ void server_side::GeneralServer::open(int port, ClientHandler &c) {
     }
 
     /* Now start listening for the clients, here process will
-       * go in sleep mode and will wait for the incoming connection
+    * go in sleep mode and will wait for the incoming connection
     */
 
     listen(serverSocket, 5);
     this->serverSocket = serverSocket;
     start(serverSocket,c);
 }
-
+/*
+ * this method close the openig sokect at the end of the program
+ */
 void server_side::GeneralServer::stop() {
     if (this->serverSocket != -1){
         close(this->serverSocket);
@@ -69,7 +74,10 @@ static void checkTimeout(int delayMilisecond, int lastConnection) {
               << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
 
-
+/*
+ * this method get the sokect and the way to handle with the celint
+ * and start to accept the messeges from the client
+ */
 void server_side::GeneralServer::start(int serverSocket, ClientHandler &c) {
     int newsockfd, clilen;
     struct sockaddr_in cli_addr;
@@ -87,7 +95,9 @@ void server_side::GeneralServer::start(int serverSocket, ClientHandler &c) {
         handle(newsockfd,c);
     }
 }
-
+/*
+ * the constractor of generalserver
+ */
 server_side::GeneralServer::GeneralServer() {
     this->serverSocket = -1;
 }

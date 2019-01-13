@@ -12,7 +12,10 @@
 #include "SearchAlgorithm.h"
 using  namespace std;
 
-
+/*
+ * this class represent a BFS that is kind of search algorithm that heir from Searcher
+ *
+ */
 template <class Node>
 class DFS : public SearchAlgorithm<Node> {
 
@@ -43,11 +46,11 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
     //todo
 
 
-    //while the queue is not empty we want to go the adj
+    //while the stack is not empty we want to go the adj
     while(!stackDfs.empty()){
-        //see the object in the front of the queue
+        //see the object in the top of the stack
         curS = stackDfs.top();
-        //dequeue the object in the front of the queue
+        //take the object in the top of the queue
         stackDfs.pop();
         this->evaluatedNodes ++;
 
@@ -58,7 +61,7 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
 
         /*
          * now we get all the adj of the curS-point.
-         * if we arrive to adj that is not marked,we visit him ,marked him,and enqueue
+         * if we arrive to adj that is not marked,we visit him ,marked him,and push
          * to the stackDfs.
          */
         vector<State<Node>*> possibleStates = searchable->getPossibleStates(curS);
@@ -84,6 +87,7 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
     }
     //todo
     cout << "evaluated nodes: " << this->getEvaluatedNodes() << endl;
+    //retrurn a vector of states that represent the path
     return (this->findPath(searchable->getGoalState()));
 }
 
