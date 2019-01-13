@@ -62,10 +62,16 @@ public:
             exit(1);
         }
 
-        if (IPoint != this->rows -1){
-            State<Point>* downState = getStateAtPoint(Point(IPoint +1, JPoint));
-            if (downState->getCost() != INF) {
-                possibleStates.push_back(downState);
+        if (IPoint != 0){
+            State<Point>* upState = getStateAtPoint(Point(IPoint-1, JPoint));
+            if ( upState->getCost() != INF){
+                possibleStates.push_back(upState);
+            }
+        }
+        if(JPoint != 0){
+            State<Point>* leftState = getStateAtPoint(Point(IPoint, JPoint-1));
+            if (leftState->getCost() != INF){
+                possibleStates.push_back(leftState);
             }
         }
         if (JPoint != cols -1){
@@ -74,20 +80,14 @@ public:
                 possibleStates.push_back(rightState);
             }
         }
-
-        if (IPoint != 0){
-            State<Point>* upState = getStateAtPoint(Point(IPoint-1, JPoint));
-            if ( upState->getCost() != INF){
-                possibleStates.push_back(upState);
+        if (IPoint != this->rows -1){
+            State<Point>* downState = getStateAtPoint(Point(IPoint +1, JPoint));
+            if (downState->getCost() != INF) {
+                possibleStates.push_back(downState);
             }
         }
 
-        if(JPoint != 0){
-            State<Point>* leftState = getStateAtPoint(Point(IPoint, JPoint-1));
-            if (leftState->getCost() != INF){
-                possibleStates.push_back(leftState);
-            }
-        }
+
 
         return possibleStates;
     }

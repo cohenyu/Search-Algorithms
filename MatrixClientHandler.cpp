@@ -50,7 +50,7 @@ Matrix* MatrixClientHandler::lexer(string str) {
         vector<string> values = split(splitStr[i], ',');
         vector<State<Point>*> row;
         for(int j = 0; j < values.size(); j++){
-            row.push_back(new State<Point>(Point(i,j), stol(values[j])));
+            row.push_back(new State<Point>(Point(i,j), stoi(values[j])));
         }
         matrix.push_back(row);
     }

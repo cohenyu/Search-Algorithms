@@ -8,18 +8,20 @@
 #include <queue>
 #include <unordered_set>
 #include "Searcher.h"
+//
+//namespace std
+//{
+//    template<class Node>
+//    struct hash<State<Node>>
+//    {
+//        int operator()(State<Node> s)
+//        {
+//            return 0;
+//        }
+//    };
+//}
 
-namespace std
-{
-    template<class Node>
-    struct hash<State<Node>>
-    {
-        int operator()(State<Node> s)
-        {
-            return 0;
-        }
-    };
-}
+
 
 template <class Node>
 class BestFS : public Searcher<Node>{
