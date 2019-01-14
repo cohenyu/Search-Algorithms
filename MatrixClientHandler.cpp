@@ -105,3 +105,7 @@ vector<string> MatrixClientHandler::split(const string &str,char delimiter) {
 
     return tokens;
 }
+
+//MatrixClientHandler::~MatrixClientHandler() {
+//    delete cm;
+//}

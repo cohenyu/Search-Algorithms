@@ -19,7 +19,6 @@ public:
     int getI();
     int getJ();
     bool operator==(Point other);
-    double distance(Point other);
 
 };
 

@@ -30,7 +30,9 @@ public:
     virtual vector<State<Node>*> search(Searchable<Node> *searchable) = 0;
     virtual int getEvaluatedNodes();
     virtual int getTotalCostPath();
-
+//    ~SearchAlgorithm()override{
+//
+//    }
 };
 
 
@@ -42,6 +44,9 @@ public:
 template <class Node>
 vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
     vector<State<Node>*> path;
+    if(goal->getCameFrom() == nullptr){
+        return path;
+    }
     //todo
     cout<<goal->getCost()<<endl;
 
@@ -61,7 +66,8 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
         this->pathCost += previousNode->getCost();
         previousNode = previousNode->getCameFrom();
     }
-    cout << "pathCost " << getTotalCostPath() << endl;
+    cout << "evaluatedNodes: " << getEvaluatedNodes() << endl;
+    cout << "pathCost: " << getTotalCostPath() << endl;
     return  path;
 }
 

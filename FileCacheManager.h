@@ -75,29 +75,12 @@ public:
     }
 
 
-     /*
-      * this method write to the file the problem and the solution withe a separator $ between them
-      */
-    void saveToFile(){
-        ofstream outFile;
-        outFile.open(this->fileName);
-        if (!outFile.is_open()){
-            perror("error opening file");
-            exit(1);
-        }
-        for(auto it = pAndS.begin(); it != pAndS.end(); it++){
-            outFile << it->first << DELIMITER << it->second << endl;
-        }
-        outFile.close();
-    }
-
     /*
-    * this method wirte to the file the problem and the solution with a separator $ between them
+    * this method write to the file the problem and the solution with a separator $ between them
     */
     void saveToFile(P problem, S solution){
-        // todo write to the end!!!! of the file (to add)
         ofstream outFile;
-        outFile.open(this->fileName);
+        outFile.open(this->fileName, ios::out | ios::app | ios::ate);
         if (!outFile.is_open()){
             perror("error opening file");
             exit(1);
@@ -134,6 +117,8 @@ public:
         ul.unlock();
         inFile.close();
     }
+
+    //~FileCacheManager()  = default;
 
 };
 

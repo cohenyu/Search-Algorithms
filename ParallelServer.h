@@ -17,11 +17,11 @@ namespace server_side {
         queue<thread> threads_queue;
     protected:
         void handle(int clientSocket, ClientHandler &c) override;
+        void stop() override;
 
-//        vector<pthread_t> threads;
+        //        vector<pthread_t> threads;
 //    protected:
 //        void handle(int clientSocket, ClientHandler &c) override;
-            void stop() override;
 //        void handleStop() override;
     };
 }

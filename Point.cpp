@@ -38,8 +38,3 @@ bool Point::operator==(Point other) {
     return (this->getI() == other.getI() && this->getJ() == other.getJ());
 }
 
-double Point::distance(Point other) {
-    double x = (this->getI() - other.getI(),2);
-    double y = pow(this->getJ() - other.getJ(), 2);
-    return sqrt(x + y);
-}

@@ -12,6 +12,7 @@ class State {
     State<T> *cameFrom;
     bool isMarked;
     long totalCost;
+    double heuristic;
 
 public:
 
@@ -22,28 +23,36 @@ public:
      * snd the isMarked to be false
      */
     State<T>(T state, int cost): curState(state){
-        this->curState = state;
+        // todo
+        //this->curState = state;
         this->cost = cost;
         this->cameFrom = nullptr;
         this->isMarked=false;
         this->totalCost  = -1;
+        //todo
+        this->heuristic = 0;
+    }
+
+    void setHeuristicValue(double value){
+        this->heuristic = value;
+    }
+
+    double getHeuristicValue(){
+        return this->heuristic;
     }
 
     /*
      * another constructor of state
      */
     State<T>(T state):curState(state){
-        this->curState = state;
+        // todo
+        //this->curState = state;
         //todo or inf
         this->cost = 0;
         this->cameFrom = nullptr;
         this->isMarked=false;
     }
 
-
-    double distance(State<T>* other){
-        return this->curState.distance(other->curState);
-    }
 
     /*
      * this method return true the the 2 state are equals
@@ -67,7 +76,7 @@ public:
     }
 
     /*
-     * thie function returns the T state
+     * this function returns the T state
      */
     T getCurState() const{
         return this->curState;

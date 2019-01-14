@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <cstdlib>
 
+
 #define INF -1
 /*
  * This class represent a matrix,its heir from searchable.
@@ -33,6 +34,12 @@ public:
         this->goalState = getStateAtPoint(goal);
         this->rows = matrix.size();
         this->cols = matrix[0].size();
+    }
+
+    double heuristic(State<Point>* a) override{
+        double prm1 = abs(a->getCurState().getI() -this->goalState->getCurState().getI());
+        double prm2 = abs(a->getCurState().getJ() - this->goalState->getCurState().getJ());
+        return prm1 + prm2;
     }
 
     /*
@@ -112,7 +119,6 @@ public:
         return possibleStates;
     }
 
-
     /*
      * this method convert a matrix to string .first we write the i,j of the init point,than we have separated |
      * and after that we write the i,j of the goal point.after the init and the goal state we put :
@@ -130,7 +136,7 @@ public:
         for(int i = 0; i <  rows; i++){
             for(int j = 0; j < cols; j++ ){
                 str += to_string(matrix[i][j]->getCost());
-                if(i != cols-1){
+                if(j != cols-1){
                     str += ',';
                 }
             }

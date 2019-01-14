@@ -11,6 +11,9 @@ template <class P, class S>
 class Solver{
 public:
     virtual S solve(P problem) = 0;
+
+    virtual S solveMe(P problem) = 0;
+    //virtual ~Solver() = default;
 };
 
 

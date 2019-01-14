@@ -32,6 +32,11 @@ public:
     Matrix* lexer(string str);
     vector<string> split (const string &str,char delimiter);
 
+    //~MatrixClientHandler();
+//    ~MatrixClientHandler()override{
+//        delete this->cm;
+//    }
+
 };
 
 

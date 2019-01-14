@@ -34,6 +34,7 @@ class BestFS : public SearchAlgorithm<Node>{
     };
 
 public:
+//    ~BestFS()override{}
     vector<State<Node>*> search(Searchable<Node> *searchable) override {
 
         State<Node>* curS =searchable->getInitState();
@@ -41,12 +42,14 @@ public:
         State<Node>* endS =searchable->getGoalState();
 
         priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> openPQueue;
-        openPQueue.push(curS);
         curS->setTotalCost(curS->getCost());
+        openPQueue.push(curS);
 
         while (!openPQueue.empty()){
             curS = openPQueue.top();
             openPQueue.pop();
+            this->evaluatedNodes ++;
+
             curS->setIsMarked(true);
             if(curS->equals(endS)){
                 break;
@@ -62,11 +65,25 @@ public:
                     adj->setCameFrom(curS);
                     adj->setTotalCost(adjFutureTotalCost);
                     openPQueue.emplace(adj);
+                    if (adj->getTotalCost() > adjFutureTotalCost) {
+                        openPQueue = updatePriorityOrder(openPQueue);
+                    }
                 }
 
             }
         }
         return this->findPath(searchable->getGoalState());
+    }
+
+    priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> updatePriorityOrder
+            (priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> curQueue){
+        priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> newQueue;
+        while (!curQueue.empty()){
+            State<Node>* temp = curQueue.top();
+            curQueue.pop();
+            newQueue.emplace(temp);
+        }
+        return newQueue;
     }
 
 };

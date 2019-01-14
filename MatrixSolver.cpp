@@ -23,6 +23,8 @@ string MatrixSolver::solve(Searchable<Point> *problem) {
     return getPath(solution);
 }
 
+
+
 /**
  * thie function takes the path in states, and calculate the path in direction from {up,down,right,left}
  * @param states the solution path
@@ -30,7 +32,9 @@ string MatrixSolver::solve(Searchable<Point> *problem) {
  */
 string MatrixSolver::getPath(vector<State<Point> *> states) {
     string path;
-
+    if (states.empty()){
+        return "-1";
+    }
     for(int i = 0; i < states.size() -1; i++){
         Point cur(states[i]->getCurState());
         Point next(states[i+1]->getCurState());
@@ -39,6 +43,7 @@ string MatrixSolver::getPath(vector<State<Point> *> states) {
             path += ',';
         }
     }
+
     return path;
 }
 
@@ -67,6 +72,17 @@ string MatrixSolver::getDirection(Point cur, Point next) {
     } else {
         return LEFT;
     }
+}
+
+string MatrixSolver::solveMe(Searchable<Point> *problem) {
+    vector<State<Point>*> solution = this->searcher->search(problem);
+    string path = getPath(solution);
+    path = "";
+    path += '\n';
+    path += "evaluated nodes: " + to_string(this->searcher->getEvaluatedNodes());
+    path += '\n';
+    path += "total path cost: " + to_string(this->searcher->getTotalCostPath());
+    return path;
 }
 
 

@@ -14,46 +14,122 @@
 #include "MatrixClientHandler.h"
 #include "FileCacheManager.h"
 #include "BestFS.h"
-
-int main() {
-
-    MatrixSolver m(new BestFS<Point>());
-//    cout << (string) mm << endl;
-
-    MatrixClientHandler c(m);
-    server_side::ParallelServer server;
-    server.open(5401,c);
+#include <AStar.h>
 
 
+vector<string> splitIt(const string &str,char delimiter) {
+    vector<string> tokens;
+    string token;
 
-//    State<Point>* s1= new State<Point>(Point(0,0),1);
-//    State<Point>* s2= new State<Point>(Point(0,1),2);
-//    State<Point>* s3= new State<Point>(Point(0,2),3);
-//    State<Point>* s4= new State<Point>(Point(0,3),4);
-//    State<Point>* s5= new State<Point>(Point(1,0),5);
-//    State<Point>* s6= new State<Point>(Point(1,1),6);
-//    State<Point>* s7= new State<Point>(Point(1,2),7);
-//    State<Point>* s8= new State<Point>(Point(1,3),8);
-//    State<Point>* s9= new State<Point>(Point(2,0),9);
-//    State<Point>* s10 = new State<Point>(Point(2,1),10);
-//    State<Point>* s11 = new State<Point>(Point(2,2),11);
-//    State<Point>* s12 = new State<Point>(Point(2,3),12);
-//    State<Point>* s13 = new State<Point>(Point(3,0),13);
-//    State<Point>* s14 = new State<Point>(Point(3,1),14);
-//    State<Point>* s15 = new State<Point>(Point(3,2),15);
-//    State<Point>* s16 = new State<Point>(Point(3,3),16);
-//
-//    vector<vector<State<Point>*>> vec = {{s1,s2,s3,s4}, {s5,s6,s7,s8}, {s9,s10,s11,s12}, {s13,s14,s15,s16}};
-//    Point p1(0,0);
-//    Point p2(3,2);
-//
-//
-//    Searchable<Point> *s = new Matrix(vec, p1, p2);
-//    Searcher<Point> *searcher = new DFS<Point>();
-//    MatrixSolver ms(searcher);
-//    string solution = ms.solve(s);
-//    cout << solution << endl;
+    for(unsigned long i = 0 ; i < str.length(); i++){
+        // skip on spaces
+        if (str.at(i) == ' '){
+            continue;
+        }
 
+        if (str.at(i) != delimiter){
+            token += str.at(i);
+        } else {
+            tokens.push_back(token);
+            token = "";
+        }
+    }
+    if (!token.empty()){
+        tokens.push_back(token);
+    }
+
+    return tokens;
+}
+
+Matrix* lexerIt(string str) {
+    vector<string> splitStr = splitIt(str, '\n');
+    unsigned long vecSize = splitStr.size();
+    // take the init point and goal point
+    vector<string> initIndex = splitIt(splitStr[vecSize-2], ',');
+    vector<string> goalIndex = splitIt(splitStr[vecSize-1], ',');
+
+    Point init(stoi(initIndex[0]), stoi(initIndex[1]));
+    Point goal(stoi(goalIndex[0]), stoi(goalIndex[1]));
+
+    vector<vector<State<Point>*>> matrix;
+    // for each cell, made a state with the same i,j and the value in this place that represent the cost.
+    for(int i = 0; i <= vecSize -3 ; i++){
+        vector<string> values = splitIt(splitStr[i], ',');
+        vector<State<Point>*> row;
+        for(int j = 0; j < values.size(); j++){
+            row.push_back(new State<Point>(Point(i,j), stoi(values[j])));
+        }
+        matrix.push_back(row);
+    }
+    return new Matrix(matrix, init, goal);
+}
+
+
+void saveToMyFile(string algo, string solution){
+    ofstream outFile;
+    outFile.open("experiment.txt", ios::out | ios::app | ios::ate);
+    if (!outFile.is_open()){
+        perror("error opening file");
+        exit(1);
+    }
+    outFile << algo <<  ":";
+    outFile << solution << endl;
+    outFile << endl;
+    outFile.close();
+}
+
+void loadFromFile(){
+    ifstream inFile;
+    inFile.open("matrixs.txt");
+
+    //problem with opening the file
+    if (inFile.bad()){
+        perror("error opening file");
+        exit(1);
+    }
+    /*
+     * run over the lines in the file
+     */
+    MatrixSolver dfs(new DFS<Point>());
+    MatrixSolver astar(new AStar<Point>());
+    MatrixSolver bestfs(new BestFS<Point>());
+    MatrixSolver bfs(new BreadthFS<Point>());
+
+    string problem;
+    int matrixNum = 1;
+    for(string line; getline(inFile, line);){
+        if (line == "@"){
+            saveToMyFile("matrix number " +to_string(matrixNum)+'\n' + "bfs", bfs.solveMe(lexerIt(problem)));
+            saveToMyFile("dfs", dfs.solveMe(lexerIt(problem)));
+            saveToMyFile("besrFS", bestfs.solveMe(lexerIt(problem)));
+            saveToMyFile("Astar", astar.solveMe(lexerIt(problem)));
+
+            problem = "";
+            matrixNum++;
+            continue;
+        }
+        problem += line + '\n';
+
+    }
+
+    inFile.close();
+}
+
+
+int main(int argc, char** argv) {
+//    int port;
+//    if(argc > 1){
+//        port = stoi(argv[1]);
+//    }
+//    MatrixSolver m(new BestFS<Point>());
+
+
+//    MatrixSolver m(new DFS<Point>());
+//    MatrixClientHandler c(m);
+//    server_side::ParallelServer server;
+//    server.open(5401,c);
+
+ loadFromFile();
 
     return 0;
 }

@@ -52,6 +52,7 @@ vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {
         }
         //dequeue the object in the front of the queue
         queueBfs.pop();
+        this->evaluatedNodes ++;
 
         /*
          * now we get all the adj of the curS-point,that we pop(remove) from the queue
