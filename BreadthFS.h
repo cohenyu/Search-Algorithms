@@ -19,7 +19,7 @@ class BreadthFS: public SearchAlgorithm<Node>{
 
 public:
     vector<State<Node>*> search(Searchable<Node> *searchable) override;
-    vector<State<Node>*>findPath(State<Node>* goal);
+    //vector<State<Node>*>findPath(State<Node>* goal);
 
 };
 /*
@@ -76,8 +76,7 @@ vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {
 
     }
     //retrurn a vector of states that represent the path
-    return (findPath(searchable->getGoalState()));
-
+    return this->findPath(searchable->getGoalState());
 
 }
 

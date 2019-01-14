@@ -48,4 +48,4 @@ add_executable(project2_my
         State.cpp
         State.h
         StringReverser.cpp
-        StringReverser.h)
+        StringReverser.h AStar.cpp AStar.h)

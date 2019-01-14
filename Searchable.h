@@ -6,8 +6,12 @@
 #define EX2_SEARCHABLE_H
 
 #include <list>
+#include <vector>
 #include "State.h"
 
+/*
+ * this method represent a Searchable object that we can run over him with search algorithm
+ */
 template <class N>
 class Searchable {
 

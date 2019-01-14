@@ -10,7 +10,9 @@
 
 using namespace std;
 template <class N>
-
+/*
+ * this class represent a Searcher object .this is an abstract class
+ */
 class Searcher {
 public:
     virtual vector<State<N>*> search(Searchable<N> *searchable) = 0;

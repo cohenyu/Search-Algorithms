@@ -5,6 +5,11 @@
 
 #include "ClientHandler.h"
 
+/*
+ * this is an abstract class that represent a server.
+ * for each server we have open,start,start and handle methods
+ *
+ */
 namespace server_side{
 
     class Server{

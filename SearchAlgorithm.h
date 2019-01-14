@@ -10,7 +10,7 @@
 #include "Point.h"
 /*
  * this class represent a search Algorithm,the target in each algorithm my be different
- * but ww want to know what was the way fron the start to the end point in the problem we search
+ * but we want to know what was the way from the start to the end point in the problem we search
  *
  */
 template <class Node>
@@ -19,17 +19,17 @@ class SearchAlgorithm : public Searcher<Node>{
 
 protected:
     int evaluatedNodes;
-    int totalCost;
+    int pathCost;
     virtual vector<State<Node>*> findPath(State<Node> *goal);
 
 public:
-    SearchAlgorithm(): totalCost(0), evaluatedNodes(0){
+    SearchAlgorithm(): pathCost(0), evaluatedNodes(0){
         //this->evaluatedNodes = 0;
-        //this->totalCost = 0;
+        //this->pathCost = 0;
     }
     virtual vector<State<Node>*> search(Searchable<Node> *searchable) = 0;
     virtual int getEvaluatedNodes();
-    virtual int getTotalCost();
+    virtual int getTotalCostPath();
 
 };
 
@@ -47,8 +47,8 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
 
     //insert the goal state
     path.push_back(goal);
-    this->totalCost += goal->getCost();
-    //this->totalCost;
+    this->pathCost += goal->getCost();
+    //this->pathCost;
     //ask for the previous in order to restore the path
     State<Node>* previousNode = goal->getCameFrom();
 
@@ -58,21 +58,28 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
         cout<< previousNode->getCost() <<endl;
         //insert the previous to the start of the path
         path.insert(path.begin(), previousNode);
-        this->totalCost += previousNode->getCost();
+        this->pathCost += previousNode->getCost();
         previousNode = previousNode->getCameFrom();
     }
-    cout << "totalCost " << getTotalCost() << endl;
+    cout << "pathCost " << getTotalCostPath() << endl;
     return  path;
 }
 
+/*
+ * this method return the number of nodes that are Evaluate-means we visit in them
+ * and developed their adj
+ */
 template <class Node>
 int SearchAlgorithm<Node>::getEvaluatedNodes() {
     return this->evaluatedNodes;
 }
 
+/*
+ * this method return the total cost of the path
+ */
 template <class Node>
-int SearchAlgorithm<Node>::getTotalCost() {
-    return this->totalCost;
+int SearchAlgorithm<Node>::getTotalCostPath() {
+    return this->pathCost;
 }
 
 

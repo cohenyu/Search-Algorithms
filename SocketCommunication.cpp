@@ -17,7 +17,7 @@ SocketCommunication::SocketCommunication() {
 }
 
 /**
- * The function read from the given socket until the given separator and returns what it reads.
+ * The function read from the given socket until the given separator char and returns what it reads.
  * @param socket the socket to read from
  * @param separator read until the separator
  * @return what the function read from the socket
@@ -45,7 +45,10 @@ string SocketCommunication::readFromSocket(int socket, char separator) {
     return data;
 }
 
-
+/*
+ * this method get a separator string  and a socket and return a string that we got from the client
+ * the separator symbol until were to read
+ */
 string SocketCommunication::readFromSocket(int socket, string separator) {
     string data;
     string temp = readFromSocket(socket, '\n');

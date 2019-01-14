@@ -88,7 +88,7 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
     //todo
     cout << "evaluated nodes: " << this->getEvaluatedNodes() << endl;
     //retrurn a vector of states that represent the path
-    return (this->findPath(searchable->getGoalState()));
+    return this->findPath(searchable->getGoalState());
 }
 
 

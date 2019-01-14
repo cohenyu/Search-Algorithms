@@ -24,7 +24,7 @@
 
 
 template <class Node>
-class BestFS : public Searcher<Node>{
+class BestFS : public SearchAlgorithm<Node>{
 
     class StateComparator{
     public:
@@ -34,7 +34,7 @@ class BestFS : public Searcher<Node>{
     };
 
 public:
-    vector<State<Node>> search(Searchable<Node> *searchable) override {
+    vector<State<Node>*> search(Searchable<Node> *searchable) override {
 
         State<Node>* curS =searchable->getInitState();
         //the end state
@@ -65,9 +65,8 @@ public:
                 }
 
             }
-
         }
-        return findPath(searchable->getGoalState());
+        return this->findPath(searchable->getGoalState());
     }
 
 };

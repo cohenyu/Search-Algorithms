@@ -73,7 +73,7 @@ public:
         vector<State<Point>*> possibleStates;
 
         //if the point is in the range
-        if (!(IPoint >= 0 && IPoint<= cols-1 && JPoint >= 0 && JPoint <= rows-1)){
+        if (!(IPoint >= 0 && IPoint < rows && JPoint >= 0 && JPoint < cols)){
             perror("Point is out of range");
             exit(1);
         }

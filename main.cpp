@@ -13,10 +13,11 @@
 #include "MatrixSolver.h"
 #include "MatrixClientHandler.h"
 #include "FileCacheManager.h"
+#include "BestFS.h"
 
 int main() {
 
-    MatrixSolver m(new DFS<Point>());
+    MatrixSolver m(new BestFS<Point>());
 //    cout << (string) mm << endl;
 
     MatrixClientHandler c(m);
