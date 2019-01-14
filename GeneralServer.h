@@ -12,9 +12,6 @@
  */
 namespace server_side {
     class GeneralServer : public Server {
-//    protected:
-//        virtual void handle(int clientSocket, ClientHandler &c) = 0;
-//        virtual void handleStop() = 0;
 
     private:
         int serverSocket;

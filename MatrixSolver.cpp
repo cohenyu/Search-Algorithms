@@ -8,15 +8,26 @@
 #define RIGHT "Right"
 #define LEFT "Left"
 
+// constructor
 MatrixSolver::MatrixSolver(Searcher<Point> *searcher) {
     this->searcher = searcher;
 }
 
+/**
+ * this function solve the problem (matrix) with a search algorithm (searcher) and returns the solution.
+ * @param problem a problem to solve
+ * @return the solution
+ */
 string MatrixSolver::solve(Searchable<Point> *problem) {
     vector<State<Point>*> solution = this->searcher->search(problem);
     return getPath(solution);
 }
 
+/**
+ * thie function takes the path in states, and calculate the path in direction from {up,down,right,left}
+ * @param states the solution path
+ * @return solution in string
+ */
 string MatrixSolver::getPath(vector<State<Point> *> states) {
     string path;
 
@@ -31,6 +42,12 @@ string MatrixSolver::getPath(vector<State<Point> *> states) {
     return path;
 }
 
+/**
+ * this function calculate from which direction the step from cur state to next state.
+ * @param cur current state
+ * @param next next state
+ * @return the result from {up,down,right,left}
+ */
 string MatrixSolver::getDirection(Point cur, Point next) {
     int curI = cur.getI();
     int curJ = cur.getJ();

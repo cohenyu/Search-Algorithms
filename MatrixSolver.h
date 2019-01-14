@@ -13,7 +13,9 @@
 #include "Searcher.h"
 
 using namespace std;
-
+/**
+ * this class solve a matrix problem
+ */
 class MatrixSolver : public Solver<Searchable<Point>*, string>{
     Searcher<Point>* searcher;
 

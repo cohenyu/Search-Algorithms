@@ -25,7 +25,7 @@ class Matrix: public Searchable<Point>{
 public:
 
     /*
-     * the constractor of Matrix
+     * the constructor of Matrix
      */
     Matrix(vector<vector<State<Point>*>> matrix, Point init, Point goal){
         this->matrix = matrix;
@@ -114,7 +114,7 @@ public:
 
 
     /*
-     * this method convert a matrix to string .fisrt we write the i,j of the init point,than we have separated |
+     * this method convert a matrix to string .first we write the i,j of the init point,than we have separated |
      * and after that we write the i,j of the goal point.after the init and the goal state we put :
      * than we write all the values that are separated with comma.each line in the matrix are separated with |
      * after we finish to write the matrix we put $ in order to separate the problem=matrix ,from the solution.
@@ -144,83 +144,3 @@ public:
 
 
 #endif //EX2_MATRIX_H
-
-
-
-//    std::list<State<Point>*> getPossibleStates(State<Point> state) override{
-//        int IPoint = state.getCurState().getI();
-//        int JPoint = state.getCurState().getJ();
-//        list<State<Point>> possibleStates;
-//
-//
-//        if (!(IPoint >= 0 && IPoint<= cols-1 && JPoint >= 0 && JPoint <= rows-1)){
-//            perror("Point is out of range");
-//            exit(1);
-//        }
-//
-//        if (IPoint != 0){
-//            State<Point> upState = getStateAtPoint(Point(IPoint-1, JPoint));
-//            if ( upState.getCost() != INF){
-//                possibleStates.emplace_back(upState);
-//            }
-//        }
-//
-//        if(JPoint != 0){
-//            State<Point> leftState = getStateAtPoint(Point(IPoint, JPoint-1));
-//            if (leftState.getCost() != INF){
-//                possibleStates.emplace_back(leftState);
-//            }
-//        }
-//
-//        if (IPoint != this->rows -1){
-//            State<Point> downState = getStateAtPoint(Point(IPoint +1, JPoint));
-//            if (downState.getCost() != INF) {
-//                possibleStates.emplace_back(downState);
-//            }
-//        }
-//
-//        if (JPoint != cols -1){
-//            State<Point> rightState = getStateAtPoint(Point(IPoint, JPoint +1));
-//            if(rightState.getCost() != INF){
-//                possibleStates.emplace_back(rightState);
-//            }
-//        }
-////
-////        if (!(IPoint >= 0 && IPoint<= cols-1 && JPoint >= 0 && JPoint <= rows-1)){
-////            perror("Point is out of range");
-////            exit(1);
-////        }
-////
-////        if (IPoint != 0){
-////            Point upPoint(IPoint-1, JPoint);
-////            cost = getCostOfPoint(upPoint);
-////            if (cost != INF){
-////                possibleStates.emplace_back(State<Point>(upPoint, cost));
-////            }
-////        }
-////
-////        if(JPoint != 0){
-////            Point leftPoint(IPoint, JPoint-1);
-////            cost = getCostOfPoint(leftPoint);
-////            if (cost != INF){
-////                possibleStates.emplace_back(State<Point>(leftPoint, cost));
-////            }
-////        }
-////
-////        if (IPoint != this->rows -1){
-////            Point downPoint(IPoint +1, JPoint);
-////            cost = getCostOfPoint(downPoint);
-////            if (cost != INF) {
-////                possibleStates.emplace_back(State<Point>(downPoint, cost));
-////            }
-////        }
-////
-////        if (JPoint != cols -1){
-////            Point rightPoint(IPoint, JPoint +1);
-////            cost = getCostOfPoint(rightPoint);
-////            if(cost != INF){
-////                possibleStates.emplace_back(State<Point>(rightPoint, cost));
-////            }
-////        }
-//
-//        return possibleStates;

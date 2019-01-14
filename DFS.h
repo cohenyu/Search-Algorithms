@@ -73,21 +73,11 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
                 stackDfs.push(temp);
             }
         }
-//        //run over the possibleStates
-//        for (State<Node>* node:possibleStates ){
-//            // todo
-//            //if the one of the possible state is not marked
-//            if(!node->getIsMarked()){
-//                node->setIsMarked(true);
-//                node->setCameFrom(curS);
-//                stackDfs.push(node);
-//
-//            }
-//        }
+
     }
     //todo
     cout << "evaluated nodes: " << this->getEvaluatedNodes() << endl;
-    //retrurn a vector of states that represent the path
+    //return a vector of states that represent the path
     return this->findPath(searchable->getGoalState());
 }
 

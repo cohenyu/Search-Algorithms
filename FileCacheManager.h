@@ -5,9 +5,9 @@
 #include "CacheManager.h"
 #include <map>
 #include <fstream>
+#include <mutex>
 
 #define DELIMITER  '$'
-#define FILE "pAndS.txt"
 
 using  namespace std;
 
@@ -20,11 +20,12 @@ template <class P, class S>
 class FileCacheManager : public CacheManager<P,S>{
     map<string,string> pAndS;
     string fileName;
+    mutable mutex m;
 
 public:
 
     /*
-     * counstractor of fileCachManger
+     * constructor of fileCachManger
      */
     FileCacheManager(string fileName){
         this->fileName = fileName;
@@ -35,38 +36,47 @@ public:
 
     /*
      * this method check if some problem exist in the file
-     * return true if the problem exsit false otherwise
+     * return true if the problem exists false otherwise
      */
     bool isProblemExist(P problem) override{
-        return (this->pAndS.find(problem) != pAndS.end());
+        unique_lock<mutex> ul(m);
+        bool result = this->pAndS.find(problem) != pAndS.end();
+        ul.unlock();
+        return result;
         //string s = (string)problem;
         //return (this->pAndS.find((string)problem) != pAndS.end());
     }
+
     /*
-     * this methos return from the file the solution as string
+     * this method return from the file the solution as string
      */
     string getSolutionForProblem(P problem) override {
         if(isProblemExist(problem)){
-            return this->pAndS.at((string)problem);
+            unique_lock<mutex> ul(m);
+            string str = this->pAndS.at((string)problem);
+            ul.unlock();
+            return str;
         }
         perror("The solution of this problem not found");
         // todo
         return nullptr;
     }
+
     /*
      * this save the problem and her solution to the file,if hey are ot exist
      */
     void saveProblemAndSolution(P problem, S solution) override{
         if (!isProblemExist(problem)){
+            unique_lock<mutex> ul(m);
             this->pAndS.insert(make_pair(problem,solution));
+            ul.unlock();
             saveToFile(problem, solution);
         }
     }
 
 
-
      /*
-      * this method wirte to the file the problem and the solutoin withe a seperator $ between them
+      * this method write to the file the problem and the solution withe a separator $ between them
       */
     void saveToFile(){
         ofstream outFile;
@@ -82,7 +92,7 @@ public:
     }
 
     /*
-    * this method wirte to the file the problem and the solutoin withe a seperator $ between them
+    * this method wirte to the file the problem and the solution with a separator $ between them
     */
     void saveToFile(P problem, S solution){
         // todo write to the end!!!! of the file (to add)
@@ -92,11 +102,13 @@ public:
             perror("error opening file");
             exit(1);
         }
+        unique_lock<mutex> ul(m);
         outFile << (string)problem << DELIMITER << (string)solution << endl;
+        ul.unlock();
         outFile.close();
     }
     /*
-     * this method load the informatin of the preblem and the solution from the file to the map in the program
+     * this method load the information of the problem and the solution from the file to the map in the program
      */
     void loadFromFile(){
         ifstream inFile;
@@ -110,6 +122,7 @@ public:
         /*
          * run over the lines in the file
          */
+        unique_lock<mutex> ul(m);
         for(string line; getline(inFile, line);){
 
             unsigned long splitIndex = line.find(DELIMITER);
@@ -118,6 +131,7 @@ public:
             this->pAndS.insert(make_pair(problem, solution));
 
         }
+        ul.unlock();
         inFile.close();
     }
 
