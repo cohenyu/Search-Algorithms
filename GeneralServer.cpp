@@ -10,6 +10,7 @@
 #include "GeneralServer.h"
 #define BUFFER_SIZE 1024
 #define CLIENTS 5
+#define SEC 1
 
 using namespace std;
 using namespace std::chrono;
@@ -96,7 +97,7 @@ void server_side::GeneralServer::start(int serverSocket, ClientHandler &c) {
 
 
         handle(newsockfd,c);
-        timeout.tv_sec = 10;
+        timeout.tv_sec = SEC;
 
         if (setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)   {
             perror("error on set timeout");
