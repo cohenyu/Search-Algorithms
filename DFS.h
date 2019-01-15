@@ -28,6 +28,10 @@ DFS<Node>::DFS(): SearchAlgorithm<Node>() {
 
 }
 
+
+/*
+* this method reality the DFS algorithm
+*/
 template <class Node>
 vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
 
@@ -41,8 +45,6 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
 
     //put the first state at the queue
     stackDfs.push(curS);
-    //todo
-
 
     //while the stack is not empty we want to go the adj
     while(!stackDfs.empty()){

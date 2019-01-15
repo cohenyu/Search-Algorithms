@@ -23,7 +23,7 @@ public:
 };
 
 /*
- * this method Reality the BFS algorithm
+ * this method reality the BFS algorithm
  */
 template <class Node>
 vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {

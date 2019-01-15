@@ -4,6 +4,9 @@
 #include "SearchAlgorithm.h"
 #include "queue"
 
+/*
+ * this class represent a A* that is kind of search algorithm that heir from Searcher
+ */
 template <class Node>
 class AStar : public SearchAlgorithm<Node> {
 
@@ -22,6 +25,9 @@ class AStar : public SearchAlgorithm<Node> {
 
 public:
 
+    /*
+    * this method reality the A* algorithm
+    */
     vector<State<Node>*> search(Searchable<Node> *searchable) override{
 
         // init state
@@ -56,7 +62,10 @@ public:
                 if(adj->getTotalCost() == INF || adj->getTotalCost() > adjFutureTotalCost) {
                     adj->setCameFrom(curS);
                     adj->setTotalCost(adjFutureTotalCost);
+                    // set the heuristic calculate for this adj state
                     adj->setHeuristicValue(searchable->heuristic(adj));
+                    //todo - delete the line in the note below
+
                     // openPQueue.emplace(adj);
                     if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);

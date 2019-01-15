@@ -131,6 +131,6 @@ int main(int argc, char** argv) {
     server.open(5401,c);
 
 // loadFromFile();
-//    ((delete(bfs)));
+//  delete bfs;
     return 0;
 }

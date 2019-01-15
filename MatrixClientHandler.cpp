@@ -1,7 +1,3 @@
-//
-// Created by yuval on 10/01/19.
-//
-
 #include <sstream>
 #include <algorithm>
 #include <unistd.h>

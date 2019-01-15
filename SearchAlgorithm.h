@@ -45,9 +45,6 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
     if(goal->getCameFrom() == nullptr){
         return path;
     }
-    //todo
-    cout<<goal->getCost()<<endl;
-
     //insert the goal state
     path.push_back(goal);
     this->pathCost += goal->getCost();
@@ -57,8 +54,6 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
 
     //while we dont arrive to the first state of node
     while (previousNode != nullptr){
-        //todo
-        cout<< previousNode->getCost() <<endl;
         //insert the previous to the start of the path
         path.insert(path.begin(), previousNode);
         this->pathCost += previousNode->getCost();

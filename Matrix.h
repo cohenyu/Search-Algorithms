@@ -182,7 +182,7 @@ public:
     }
 
 // todo
-
+//
 //    ~Matrix(){
 //        delete goalState;
 //        delete initState;

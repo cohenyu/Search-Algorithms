@@ -18,6 +18,10 @@ class BestFS : public SearchAlgorithm<Node>{
     };
 
 public:
+
+    /*
+    * this method reality the Best search first algorithm
+    */
     vector<State<Node>*> search(Searchable<Node> *searchable) override {
 
         State<Node>* curS =searchable->getInitState();
