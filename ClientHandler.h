@@ -9,6 +9,8 @@
 class ClientHandler {
 public:
     virtual void handleClient(int socket)=0;
+
+    virtual ~ClientHandler() = default;
 };
 
 

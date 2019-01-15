@@ -53,9 +53,6 @@ public:
      * @return the manhattan distance
      */
     double heuristic(State<Point>* a) override{
-//        double prm1 = abs(a->getCurState().getI() -this->goalState->getCurState().getI());
-//        double prm2 = abs(a->getCurState().getJ() - this->goalState->getCurState().getJ());
-//        return prm1 + prm2;
         double prm1 = pow(a->getCurState().getI() -this->goalState->getCurState().getI(), 2);
         double prm2 = pow(a->getCurState().getJ() - this->goalState->getCurState().getJ(), 2);
         return sqrt(prm1 + prm2);
@@ -184,13 +181,6 @@ public:
         }
         return str;
     }
-
-// todo
-//
-//    ~Matrix(){
-//        delete goalState;
-//        delete initState;
-//    }
 };
 
 

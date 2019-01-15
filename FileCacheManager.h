@@ -23,7 +23,6 @@ class FileCacheManager : public CacheManager<P,S>{
     mutable mutex m;
 
 public:
-
     /*
      * constructor of fileCacheManager
      */
@@ -54,7 +53,6 @@ public:
             return str;
         }
         perror("The solution of this problem not found");
-        // todo
         string s;
         return s;
     }
@@ -114,6 +112,10 @@ public:
         ul.unlock();
         inFile.close();
     }
+
+    ~FileCacheManager() override = default;
+
+
 };
 
 

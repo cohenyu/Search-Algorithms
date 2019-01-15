@@ -23,6 +23,7 @@ public:
      * snd the isMarked to be false
      */
     State<T>(T state, int cost): curState(state){
+        this->curState = state;
         this->cost = cost;
         this->cameFrom = nullptr;
         this->isMarked=false;

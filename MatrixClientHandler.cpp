@@ -1,6 +1,7 @@
 #include <sstream>
 #include <algorithm>
 #include <unistd.h>
+#include <iostream>
 #include "MatrixClientHandler.h"
 #include "Matrix.h"
 #include "FileCacheManager.h"
@@ -23,14 +24,13 @@ void MatrixClientHandler::handleClient(int socket) {
     // write the solution
     socketCommunication.writeToSocket(socket, getSolution(*matrix) + "\n");
     close(socket);
-    //todo
-//    vector<vector<State<Point>*>> matrixVec = matrix->getMatrix();
-//    for(int i = 0; i< matrix->getRows(); i++){
-//        for (int j=0; j<matrix->getCols(); j++){
-//            delete (matrixVec[i][j]);
-//        }
-//    }
-//    delete(matrix);
+    vector<vector<State<Point> *>> mat = matrix->getMatrix();
+    for (int i = 0; i < matrix->getRows(); i++){
+        for (int j = 0; j< matrix->getCols(); j++){
+            delete(mat[i][j]);
+        }
+    }
+    delete (matrix);
 }
 
 /**
@@ -110,7 +110,6 @@ vector<string> MatrixClientHandler::split(const string &str,char delimiter) {
     return tokens;
 }
 
-// todo
-//MatrixClientHandler::~MatrixClientHandler() {
-//    delete cm;
-//}
+MatrixClientHandler::~MatrixClientHandler() {
+    delete this->cm;
+}

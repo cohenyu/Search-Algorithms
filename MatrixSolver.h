@@ -20,7 +20,8 @@ public:
     MatrixSolver(Searcher<Point>* searcher);
     string solve(Searchable<Point> *problem) override;
     string getPath(vector<State<Point>*> States);
-    string solveMe(Searchable<Point> *problem)override;
+
+    virtual string solveMe(Searchable<Point> *problem);
 
 private:
     string getDirection(Point cur, Point next);

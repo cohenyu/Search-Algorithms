@@ -4,7 +4,7 @@
 #include <queue>
 #include <unordered_set>
 #include "Searcher.h"
-
+#include "SearchAlgorithm.h"
 
 template <class Node>
 class BestFS : public SearchAlgorithm<Node>{
@@ -22,6 +22,7 @@ public:
         this->evaluatedNodes = 0;
         this->pathCost = 0;
     }
+
     /*
     * this method reality the Best search first algorithm
     */
@@ -43,10 +44,8 @@ public:
             if (!curS->getIsMarked()){
                 this->evaluatedNodes ++;
             }
-
             curS->setIsMarked(true);
-//            curS->setIsMarked(true);
-//            //we check if we arrive the end and found our path
+            //we check if we arrive the end and found our path
             if(curS->equals(endS)){
                 break;
             }
@@ -62,12 +61,11 @@ public:
                 if(adj->getTotalCost() == INF || adj->getTotalCost() > adjFutureTotalCost){
                     adj->setCameFrom(curS);
                     adj->setTotalCost(adjFutureTotalCost);
-                    openPQueue.emplace(adj);
                     // update the queue order
                     if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);
                     } else{
-                        //openPQueue.emplace(adj);
+                        openPQueue.emplace(adj);
                     }
                 }
 

@@ -1,6 +1,3 @@
-//
-// Created by yuval on 07/01/19.
-//
 
 #ifndef EX2_SEARCHABLE_H
 #define EX2_SEARCHABLE_H

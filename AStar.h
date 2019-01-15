@@ -43,11 +43,11 @@ public:
         curS->setHeuristicValue(searchable->heuristic(curS));
         curS->setTotalCost(curS->getCost());
         openPQueue.push(curS);
-
         while (!openPQueue.empty()){
             //see the object in the front of the queue
             curS = openPQueue.top();
             openPQueue.pop();
+            //this->evaluatedNodes ++;
             if (!curS->getIsMarked()){
                 this->evaluatedNodes ++;
             }
@@ -70,12 +70,10 @@ public:
                     adj->setTotalCost(adjFutureTotalCost);
                     // set the heuristic calculate for this adj state
                     adj->setHeuristicValue(searchable->heuristic(adj));
-                    //todo - delete the line in the note below
-                    openPQueue.emplace(adj);
                     if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);
                     } else{
-                        //openPQueue.emplace(adj);
+                        openPQueue.emplace(adj);
                     }
                 }
             }

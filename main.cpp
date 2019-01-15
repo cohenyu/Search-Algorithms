@@ -1,19 +1,13 @@
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include "MySerialServer.h"
-#include "StringReverser.h"
 #include "ParallelServer.h"
 #include "Point.h"
-#include "Matrix.h"
 #include "Searcher.h"
-#include "BreadthFS.h"
-#include "DFS.h"
-#include "MatrixSolver.h"
 #include "MatrixSolver.h"
 #include "MatrixClientHandler.h"
+#include <AStar.h>
 #include "FileCacheManager.h"
 #include "BestFS.h"
+#include "DFS.h"
+#include "BreadthFS.h"
 #include <AStar.h>
 
 
@@ -67,7 +61,7 @@ Matrix* lexerIt(string str) {
 
 void saveToMyFile(string algo, string solution){
     ofstream outFile;
-    outFile.open("AstarTest.txt", ios::out | ios::app | ios::ate);
+    outFile.open("test1.txt", ios::out | ios::app | ios::ate);
     if (!outFile.is_open()){
         perror("error opening file");
         exit(1);
@@ -116,21 +110,31 @@ void loadFromFile(){
 }
 
 
+namespace boot {
+    class Main{
+    public:
+
+        int main(int argc, char** argv){
+            int port;
+            if(argc > 1){
+                port = stoi(argv[1]);
+            } else{
+                return 0;
+            }
+            Searcher<Point>* aStarAlgo = new AStar<Point>();
+            MatrixSolver m(aStarAlgo);
+            MatrixClientHandler c(m);
+            server_side::ParallelServer server;
+            server.open(port,c);
+            //loadFromFile();
+            delete(aStarAlgo);
+            return 0;
+        }
+    };
+}
+
 int main(int argc, char** argv) {
-//    int port;
-//    if(argc > 1){
-//        port = stoi(argv[1]);
-//    }
-//    Searcher<Point> *bfs = new BestFS<Point>();
-//    MatrixSolver m(bfs);
-
-
-//    MatrixSolver m(new AStar<Point>());
-//    MatrixClientHandler c(m);
-//    server_side::ParallelServer server;
-//    server.open(5401,c);
-
- loadFromFile();
-//  delete bfs;
+    boot::Main m;
+    m.main(argc, argv);
     return 0;
 }

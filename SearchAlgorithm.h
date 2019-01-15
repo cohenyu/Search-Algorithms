@@ -54,7 +54,6 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
     //insert the goal state
     path.push_back(goal);
     this->pathCost += goal->getCost();
-    //this->pathCost;
     //ask for the previous in order to restore the path
     State<Node>* previousNode = goal->getCameFrom();
 
@@ -65,8 +64,6 @@ vector<State<Node> *> SearchAlgorithm<Node>::findPath(State<Node> *goal) {
         this->pathCost += previousNode->getCost();
         previousNode = previousNode->getCameFrom();
     }
-    cout << "evaluatedNodes: " << getEvaluatedNodes() << endl;
-    cout << "pathCost: " << getTotalCostPath() << endl;
     return  path;
 }
 
@@ -86,9 +83,6 @@ template <class Node>
 int SearchAlgorithm<Node>::getTotalCostPath() {
     return this->pathCost;
 }
-
-
-
 
 
 #endif //EX2_ALGORITHM_H
