@@ -25,9 +25,6 @@ public:
     virtual operator std::string() const = 0;
 
     virtual double heuristic(State<N>* a) = 0;
-//    ~Searchable(){
-//
-//    }
 };
 
 #endif //EX2_SEARCHABLE_H

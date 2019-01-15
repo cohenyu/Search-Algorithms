@@ -121,15 +121,16 @@ int main(int argc, char** argv) {
 //    if(argc > 1){
 //        port = stoi(argv[1]);
 //    }
-//    MatrixSolver m(new BestFS<Point>());
+//    Searcher<Point> *bfs = new BestFS<Point>();
+//    MatrixSolver m(bfs);
 
 
-//    MatrixSolver m(new DFS<Point>());
-//    MatrixClientHandler c(m);
-//    server_side::ParallelServer server;
-//    server.open(5401,c);
+    MatrixSolver m(new AStar<Point>());
+    MatrixClientHandler c(m);
+    server_side::ParallelServer server;
+    server.open(5401,c);
 
- loadFromFile();
-
+// loadFromFile();
+//    ((delete(bfs)));
     return 0;
 }

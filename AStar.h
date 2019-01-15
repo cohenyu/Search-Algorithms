@@ -1,7 +1,3 @@
-//
-// Created by yuval on 14/01/19.
-//
-
 #ifndef PROJECT2_MY_ASTAR_H
 #define PROJECT2_MY_ASTAR_H
 
@@ -11,10 +7,12 @@
 template <class Node>
 class AStar : public SearchAlgorithm<Node> {
 
+    // a class for the priority queue order
     class StateComparator{
         double calTotalCostAndH(State<Node>* state){
             return state->getTotalCost()+ state->getHeuristicValue();
         }
+
     public:
         bool operator()(State<Node>* left, State<Node>* right){
             return calTotalCostAndH(left) > calTotalCostAndH(right);
@@ -26,6 +24,7 @@ public:
 
     vector<State<Node>*> search(Searchable<Node> *searchable) override{
 
+        // init state
         State<Node>* curS =searchable->getInitState();
         //the end state
         State<Node>* endS =searchable->getGoalState();
@@ -36,28 +35,33 @@ public:
         openPQueue.push(curS);
 
         while (!openPQueue.empty()){
+            //see the object in the front of the queue
             curS = openPQueue.top();
             openPQueue.pop();
             this->evaluatedNodes ++;
 
             curS->setIsMarked(true);
+            //we check if we arrive the end and found our path
             if(curS->equals(endS)){
                 break;
             }
 
+            // get all the possible states that adjacent to current state
             vector<State<Node>*> possibleStates = searchable->getPossibleStates(curS);
             long upToCost = curS->getTotalCost();
             for (int i = 0; i < possibleStates.size(); i++) {
                 State<Node>* adj = possibleStates[i];
                 long adjFutureTotalCost = adj->getCost() + upToCost;
                 // if the total cost is -1- we didnt get to thus node yet;
-                if(adj->getTotalCost() == -1 || adj->getTotalCost() > adjFutureTotalCost) {
+                if(adj->getTotalCost() == INF || adj->getTotalCost() > adjFutureTotalCost) {
                     adj->setCameFrom(curS);
                     adj->setTotalCost(adjFutureTotalCost);
                     adj->setHeuristicValue(searchable->heuristic(adj));
-                    openPQueue.emplace(adj);
-                    if (adj->getTotalCost() > adjFutureTotalCost) { 
+                    // openPQueue.emplace(adj);
+                    if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);
+                    } else{
+                        openPQueue.emplace(adj);
                     }
                 }
             }
@@ -65,6 +69,11 @@ public:
         return this->findPath(searchable->getGoalState());
     }
 
+    /**
+    * this function orders the priority queue
+    * @param curQueue
+    * @return new priority queue
+    */
     priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> updatePriorityOrder
     (priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> curQueue){
         priority_queue<State<Node>*, vector<State<Node>*>, StateComparator> newQueue;

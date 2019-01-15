@@ -18,7 +18,6 @@ public:
     virtual vector<State<N>*> search(Searchable<N> *searchable) = 0;
     virtual int getEvaluatedNodes()=0;
     virtual int getTotalCostPath()=0;
-   // virtual ~Searcher()= default;
 };
 
 #endif //EX2_SEARCHER_H

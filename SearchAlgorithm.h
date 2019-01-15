@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Searcher.h"
 #include "Point.h"
+#define INF -1
 /*
  * this class represent a search Algorithm,the target in each algorithm my be different
  * but we want to know what was the way from the start to the end point in the problem we search
@@ -24,15 +25,12 @@ protected:
 
 public:
     SearchAlgorithm(): pathCost(0), evaluatedNodes(0){
-        //this->evaluatedNodes = 0;
-        //this->pathCost = 0;
+
     }
     virtual vector<State<Node>*> search(Searchable<Node> *searchable) = 0;
     virtual int getEvaluatedNodes();
     virtual int getTotalCostPath();
-//    ~SearchAlgorithm()override{
-//
-//    }
+
 };
 
 

@@ -1,7 +1,7 @@
 
 #ifndef EX2_STATE_H
 #define EX2_STATE_H
-
+#define INF -1
 /*
  * this class represent a state
  */
@@ -23,13 +23,10 @@ public:
      * snd the isMarked to be false
      */
     State<T>(T state, int cost): curState(state){
-        // todo
-        //this->curState = state;
         this->cost = cost;
         this->cameFrom = nullptr;
         this->isMarked=false;
-        this->totalCost  = -1;
-        //todo
+        this->totalCost  = INF;
         this->heuristic = 0;
     }
 
@@ -45,9 +42,6 @@ public:
      * another constructor of state
      */
     State<T>(T state):curState(state){
-        // todo
-        //this->curState = state;
-        //todo or inf
         this->cost = 0;
         this->cameFrom = nullptr;
         this->isMarked=false;

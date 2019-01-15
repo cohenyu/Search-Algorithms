@@ -18,11 +18,6 @@ namespace server_side {
     protected:
         void handle(int clientSocket, ClientHandler &c) override;
         void stop() override;
-
-        //        vector<pthread_t> threads;
-//    protected:
-//        void handle(int clientSocket, ClientHandler &c) override;
-//        void handleStop() override;
     };
 }
 

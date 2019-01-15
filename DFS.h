@@ -14,7 +14,6 @@ using  namespace std;
 
 /*
  * this class represent a BFS that is kind of search algorithm that heir from Searcher
- *
  */
 template <class Node>
 class DFS : public SearchAlgorithm<Node> {
@@ -22,7 +21,6 @@ class DFS : public SearchAlgorithm<Node> {
 public:
     DFS();
     vector<State<Node>*> search(Searchable<Node> *searchable) override;
-
 };
 
 template <class Node>
@@ -75,9 +73,6 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
         }
 
     }
-    //todo
-   // cout << "evaluated nodes: " << this->getEvaluatedNodes() << endl;
-    //return a vector of states that represent the path
     return this->findPath(searchable->getGoalState());
 }
 

@@ -1,6 +1,4 @@
-//
-// Created by yuval on 07/01/19.
-//
+
 
 #include "Point.h"
 #include "math.h"
@@ -13,7 +11,7 @@ Point::Point(int i, int j) {
     this->j = j;
 }
 /*
- * constractor of point
+ * constructor of point
  */
 Point::Point() {
     this->i = 0;

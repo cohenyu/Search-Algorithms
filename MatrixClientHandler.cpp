@@ -27,6 +27,14 @@ void MatrixClientHandler::handleClient(int socket) {
     // write the solution
     socketCommunication.writeToSocket(socket, getSolution(*matrix) + "\n");
     close(socket);
+    //todo
+//    vector<vector<State<Point>*>> matrixVec = matrix->getMatrix();
+//    for(int i = 0; i< matrix->getRows(); i++){
+//        for (int j=0; j<matrix->getCols(); j++){
+//            delete (matrixVec[i][j]);
+//        }
+//    }
+//    delete(matrix);
 }
 
 /**
@@ -65,7 +73,7 @@ Matrix* MatrixClientHandler::lexer(string str) {
 
     vector<vector<State<Point>*>> matrix;
     // for each cell, made a state with the same i,j and the value in this place that represent the cost.
-    for(int i = 0; i <= vecSize -3 ; i++){
+    for(int i = 0; i < vecSize -2 ; i++){
         vector<string> values = split(splitStr[i], ',');
         vector<State<Point>*> row;
         for(int j = 0; j < values.size(); j++){
@@ -106,6 +114,7 @@ vector<string> MatrixClientHandler::split(const string &str,char delimiter) {
     return tokens;
 }
 
+// todo
 //MatrixClientHandler::~MatrixClientHandler() {
 //    delete cm;
 //}

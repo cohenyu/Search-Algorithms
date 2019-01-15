@@ -8,7 +8,7 @@
 
 #include "Server.h"
 /*
- * this class represet a general sever that have the basic methods ,its heir from Server
+ * this class represent a general sever that have the basic methods ,its heir from Server
  */
 namespace server_side {
     class GeneralServer : public Server {

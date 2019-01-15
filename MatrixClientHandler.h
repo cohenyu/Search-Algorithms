@@ -1,7 +1,3 @@
-//
-// Created by yuval on 10/01/19.
-//
-
 #ifndef EX2_MATRIXCLIENTHANDLER_H
 #define EX2_MATRIXCLIENTHANDLER_H
 
@@ -31,11 +27,6 @@ public:
     void handleClient(int socket) override;
     Matrix* lexer(string str);
     vector<string> split (const string &str,char delimiter);
-
-    //~MatrixClientHandler();
-//    ~MatrixClientHandler()override{
-//        delete this->cm;
-//    }
 
 };
 

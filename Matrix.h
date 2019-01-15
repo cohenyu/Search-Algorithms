@@ -10,6 +10,7 @@
 
 
 #define INF -1
+#define FIRST_ROW 0
 /*
  * This class represent a matrix,its heir from searchable.
  * for each matrix have a init and goal points,and number of row and col
@@ -33,9 +34,23 @@ public:
         this->initState = getStateAtPoint(init);
         this->goalState = getStateAtPoint(goal);
         this->rows = matrix.size();
-        this->cols = matrix[0].size();
+        this->cols = matrix[FIRST_ROW].size();
     }
 
+    //copy constructor
+    Matrix(const Matrix& matrix1){
+        this->matrix = matrix1.matrix;
+        this->initState = getStateAtPoint(matrix1.initState->getCurState());
+        this->goalState = getStateAtPoint(matrix1.goalState->getCurState());
+        this->rows = matrix1.rows;
+        this->cols = matrix1.cols;
+    }
+
+    /**
+     * this function calculates the manhattan distance from a state to goal state.
+     * @param a a state
+     * @return the manhattan distance
+     */
     double heuristic(State<Point>* a) override{
         double prm1 = abs(a->getCurState().getI() -this->goalState->getCurState().getI());
         double prm2 = abs(a->getCurState().getJ() - this->goalState->getCurState().getJ());
@@ -62,6 +77,7 @@ public:
     double getCostOfPoint(Point p){
         return matrix[p.getI()][p.getJ()]->getCost();
     }
+
     /*
      * this method get a point and return the state of the point
      */
@@ -113,10 +129,28 @@ public:
                 possibleStates.push_back(downState);
             }
         }
-
-
-
         return possibleStates;
+    }
+
+    /**
+     * this function returns the matrix.
+     */
+    const vector<vector<State<Point> *>> &getMatrix() const {
+        return matrix;
+    }
+
+    /**
+     * this function returns the rows of the matrix
+     */
+    unsigned long getRows() const {
+        return rows;
+    }
+
+    /**
+     * this function returns the columns of the matrix
+     */
+    unsigned long getCols() const {
+        return cols;
     }
 
     /*
@@ -146,6 +180,13 @@ public:
         }
         return str;
     }
+
+// todo
+
+//    ~Matrix(){
+//        delete goalState;
+//        delete initState;
+//    }
 };
 
 

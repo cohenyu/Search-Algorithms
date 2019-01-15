@@ -1,7 +1,3 @@
-//
-// Created by yuval on 06/01/19.
-//
-
 #ifndef EX2_CACHEMANAGER_H
 #define EX2_CACHEMANAGER_H
 
@@ -15,7 +11,6 @@ public:
     virtual bool isProblemExist(P problem) = 0;
     virtual S getSolutionForProblem(P problem) = 0;
     virtual void saveProblemAndSolution(P problem, S solution) = 0;
-    //virtual ~CacheManager()  = default;
 };
 
 

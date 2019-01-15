@@ -9,6 +9,7 @@
 #include <iostream>
 #include "GeneralServer.h"
 #define BUFFER_SIZE 1024
+#define CLIENTS 5
 
 using namespace std;
 using namespace std::chrono;
@@ -51,7 +52,7 @@ void server_side::GeneralServer::open(int port, ClientHandler &c) {
     * go in sleep mode and will wait for the incoming connection
     */
 
-    listen(serverSocket, 5);
+    listen(serverSocket, CLIENTS);
     this->serverSocket = serverSocket;
     start(serverSocket,c);
 }
@@ -64,18 +65,6 @@ void server_side::GeneralServer::stop() {
     }
 
 }
-
-//static void checkTimeout(int delayMilisecond, int lastConnection) {
-//    auto start = std::chrono::system_clock::now();
-//    // Some computation here
-//    auto end = std::chrono::system_clock::now();
-//
-//    std::chrono::duration<double> elapsed_seconds = end-start;
-//    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-//
-//    std::cout << "finished computation at " << std::ctime(&end_time)
-//              << "elapsed time: " << elapsed_seconds.count() << "s\n";
-//}
 
 /*
  * this method get the socket and the way to handle with the client

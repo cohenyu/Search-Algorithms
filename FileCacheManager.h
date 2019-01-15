@@ -25,14 +25,12 @@ class FileCacheManager : public CacheManager<P,S>{
 public:
 
     /*
-     * constructor of fileCachManger
+     * constructor of fileCacheManager
      */
     FileCacheManager(string fileName){
         this->fileName = fileName;
         loadFromFile();
     }
-
-
 
     /*
      * this method check if some problem exist in the file
@@ -43,8 +41,6 @@ public:
         bool result = this->pAndS.find(problem) != pAndS.end();
         ul.unlock();
         return result;
-        //string s = (string)problem;
-        //return (this->pAndS.find((string)problem) != pAndS.end());
     }
 
     /*
@@ -59,7 +55,8 @@ public:
         }
         perror("The solution of this problem not found");
         // todo
-        return nullptr;
+        string s;
+        return s;
     }
 
     /*
@@ -90,6 +87,7 @@ public:
         ul.unlock();
         outFile.close();
     }
+
     /*
      * this method load the information of the problem and the solution from the file to the map in the program
      */
@@ -102,9 +100,8 @@ public:
             perror("error opening file");
             exit(1);
         }
-        /*
-         * run over the lines in the file
-         */
+
+        //run over the lines in the file
         unique_lock<mutex> ul(m);
         for(string line; getline(inFile, line);){
 
@@ -117,9 +114,6 @@ public:
         ul.unlock();
         inFile.close();
     }
-
-    //~FileCacheManager()  = default;
-
 };
 
 

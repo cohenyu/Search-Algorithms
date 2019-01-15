@@ -1,6 +1,3 @@
-//
-// Created by yuval on 10/01/19.
-//
 
 #ifndef EX2_MATRIXSOLVER_H
 #define EX2_MATRIXSOLVER_H
@@ -21,15 +18,9 @@ class MatrixSolver : public Solver<Searchable<Point>*, string>{
 
 public:
     MatrixSolver(Searcher<Point>* searcher);
-
     string solve(Searchable<Point> *problem) override;
-    //string MatrixSolver::solveMe(Searchable<Point> *problem)override;
     string getPath(vector<State<Point>*> States);
-
     string solveMe(Searchable<Point> *problem)override;
-//    ~MatrixSolver()override{
-//        delete searcher;
-//    }
 
 private:
     string getDirection(Point cur, Point next);

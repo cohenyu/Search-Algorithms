@@ -74,6 +74,7 @@ string MatrixSolver::getDirection(Point cur, Point next) {
     }
 }
 
+//todo
 string MatrixSolver::solveMe(Searchable<Point> *problem) {
     vector<State<Point>*> solution = this->searcher->search(problem);
     string path = getPath(solution);
