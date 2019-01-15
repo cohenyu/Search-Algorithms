@@ -8,20 +8,22 @@
 #include <cstdio>
 #include <cstdlib>
 #include <math.h>
+#include <string>
 
 
 #define INF -1
 #define FIRST_ROW 0
+
 /*
  * This class represent a matrix,its heir from searchable.
  * for each matrix have a init and goal points,and number of row and col
  * each cell is State of Point
  */
 using namespace std;
-class Matrix: public Searchable<Point>{
-    State<Point>* initState;
-    State<Point>* goalState;
-    vector<vector<State<Point>*>>  matrix;
+class Matrix: public Searchable<Point> {
+    State<Point> *initState;
+    State<Point> *goalState;
+    vector<vector<State<Point> *>> matrix;
     unsigned long rows;
     unsigned long cols;
 
@@ -30,7 +32,7 @@ public:
     /*
      * the constructor of Matrix
      */
-    Matrix(vector<vector<State<Point>*>> matrix, Point init, Point goal){
+    Matrix(vector<vector<State<Point> *>> matrix, Point init, Point goal) {
         this->matrix = matrix;
         this->initState = getStateAtPoint(init);
         this->goalState = getStateAtPoint(goal);
@@ -39,7 +41,7 @@ public:
     }
 
     //copy constructor
-    Matrix(const Matrix& matrix1){
+    Matrix(const Matrix &matrix1) {
         this->matrix = matrix1.matrix;
         this->initState = getStateAtPoint(matrix1.initState->getCurState());
         this->goalState = getStateAtPoint(matrix1.goalState->getCurState());
@@ -52,8 +54,8 @@ public:
      * @param a a state
      * @return the manhattan distance
      */
-    double heuristic(State<Point>* a) override{
-        double prm1 = pow(a->getCurState().getI() -this->goalState->getCurState().getI(), 2);
+    double heuristic(State<Point> *a) override {
+        double prm1 = pow(a->getCurState().getI() - this->goalState->getCurState().getI(), 2);
         double prm2 = pow(a->getCurState().getJ() - this->goalState->getCurState().getJ(), 2);
         return sqrt(prm1 + prm2);
     }
@@ -61,28 +63,28 @@ public:
     /*
      * this method return the init state
      */
-    State<Point>* getInitState() const override {
+    State<Point> *getInitState() const override {
         return this->initState;
     }
 
     /*
      * this method return the goal state
      */
-    State<Point>* getGoalState() const override{
+    State<Point> *getGoalState() const override {
         return this->goalState;
     }
 
     /*
      * this method return the cost of the point
      */
-    double getCostOfPoint(Point p){
+    double getCostOfPoint(Point p) {
         return matrix[p.getI()][p.getJ()]->getCost();
     }
 
     /*
      * this method get a point and return the state of the point
      */
-    State<Point>* getStateAtPoint(Point p){
+    State<Point> *getStateAtPoint(Point p) {
         return matrix[p.getI()][p.getJ()];
     }
 
@@ -94,38 +96,38 @@ public:
     vector<State<Point> *> getPossibleStates(State<Point> *state) override {
         int IPoint = state->getCurState().getI();
         int JPoint = state->getCurState().getJ();
-        vector<State<Point>*> possibleStates;
+        vector<State<Point> *> possibleStates;
 
         //if the point is in the range
-        if (!(IPoint >= 0 && IPoint < rows && JPoint >= 0 && JPoint < cols)){
+        if (!(IPoint >= 0 && IPoint < rows && JPoint >= 0 && JPoint < cols)) {
             perror("Point is out of range");
             exit(1);
         }
         //if the point,at i index, is not in the first line we have upState
-        if (IPoint != 0){
-            State<Point>* upState = getStateAtPoint(Point(IPoint-1, JPoint));
+        if (IPoint != 0) {
+            State<Point> *upState = getStateAtPoint(Point(IPoint - 1, JPoint));
             //if the cost is not -1
-            if ( upState->getCost() != INF){
+            if (upState->getCost() != INF) {
                 possibleStates.push_back(upState);
             }
         }
         //if the point,at index j,is not the most left we have leftState
-        if(JPoint != 0){
-            State<Point>* leftState = getStateAtPoint(Point(IPoint, JPoint-1));
-            if (leftState->getCost() != INF){
+        if (JPoint != 0) {
+            State<Point> *leftState = getStateAtPoint(Point(IPoint, JPoint - 1));
+            if (leftState->getCost() != INF) {
                 possibleStates.push_back(leftState);
             }
         }
         //if the point,at index j,is not the last column we have rightState
-        if (JPoint != cols -1){
-            State<Point>* rightState = getStateAtPoint(Point(IPoint, JPoint +1));
-            if(rightState->getCost() != INF){
+        if (JPoint != cols - 1) {
+            State<Point> *rightState = getStateAtPoint(Point(IPoint, JPoint + 1));
+            if (rightState->getCost() != INF) {
                 possibleStates.push_back(rightState);
             }
         }
         //if the point,at i index, is not in the lowest line we have downState
-        if (IPoint != this->rows -1){
-            State<Point>* downState = getStateAtPoint(Point(IPoint +1, JPoint));
+        if (IPoint != this->rows - 1) {
+            State<Point> *downState = getStateAtPoint(Point(IPoint + 1, JPoint));
             if (downState->getCost() != INF) {
                 possibleStates.push_back(downState);
             }
@@ -133,6 +135,13 @@ public:
         return possibleStates;
     }
 
+
+    /**
+     * this function returns the columns of the matrix
+     */
+    unsigned long getCols() const {
+        return cols;
+    }
     /**
      * this function returns the matrix.
      */
@@ -147,13 +156,6 @@ public:
         return rows;
     }
 
-    /**
-     * this function returns the columns of the matrix
-     */
-    unsigned long getCols() const {
-        return cols;
-    }
-
     /*
      * this method convert a matrix to string .first we write the i,j of the init point,than we have separated |
      * and after that we write the i,j of the goal point.after the init and the goal state we put :
@@ -161,27 +163,29 @@ public:
      * after we finish to write the matrix we put $ in order to separate the problem=matrix ,from the solution.
      * after the $ we write the string that represent the path of the solution
      */
-    operator std::string() const override{
+    operator string() const override {
         string str;
         str += to_string(initState->getCurState().getI()) + ',' + to_string(initState->getCurState().getJ());
         str += '|';
         str += to_string(goalState->getCurState().getI()) + ',' + to_string(goalState->getCurState().getJ());
         str += ':';
 
-        for(int i = 0; i <  rows; i++){
-            for(int j = 0; j < cols; j++ ){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 str += to_string(matrix[i][j]->getCost());
-                if(j != cols-1){
+                if (j != cols - 1) {
                     str += ',';
                 }
             }
-            if(i != rows-1){
+            if (i != rows - 1) {
                 str += '|';
             }
         }
         return str;
     }
+
 };
+
 
 
 #endif //EX2_MATRIX_H

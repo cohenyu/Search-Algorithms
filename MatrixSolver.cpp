@@ -74,18 +74,6 @@ string MatrixSolver::getDirection(Point cur, Point next) {
     }
 }
 
-string MatrixSolver::solveMe(Searchable<Point> *problem) {
-    vector<State<Point>*> solution = this->searcher->search(problem);
-    //string sol = getPath(solution);
-    string path;
-    path += '\n';
-    //path += sol;
-    path += "evaluated nodes: " + to_string(this->searcher->getEvaluatedNodes());
-    path += '\n';
-    path += "total path cost: " + to_string(this->searcher->getTotalCostPath());
-    return path;
-}
-
 
 
 

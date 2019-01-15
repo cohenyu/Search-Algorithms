@@ -2,13 +2,13 @@
 #define EX2_SEARCHER_H
 
 #include "Searchable.h"
-#include "vector"
+#include <vector>
 
 using namespace std;
-template <class N>
 /*
  * this class represent a Searcher object .this is an abstract class
  */
+template <class N>
 class Searcher {
 public:
     virtual vector<State<N>*> search(Searchable<N> *searchable) = 0;

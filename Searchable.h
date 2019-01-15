@@ -5,7 +5,9 @@
 #include <list>
 #include <vector>
 #include "State.h"
+#include <string>
 
+using namespace std;
 /*
  * this method represent a Searchable object that we can run over him with search algorithm
  */
@@ -17,9 +19,9 @@ public:
 
     virtual State<N>* getGoalState() const = 0;
 
-    virtual std::vector<State<N>*> getPossibleStates(State<N>* state) = 0;
+    virtual vector<State<N>*> getPossibleStates(State<N>* state) = 0;
 
-    virtual operator std::string() const = 0;
+    virtual operator string() const = 0;
 
     virtual double heuristic(State<N>* a) = 0;
 };

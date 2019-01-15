@@ -1,7 +1,7 @@
 
 
 #include "Point.h"
-#include "math.h"
+#include <math.h>
 
 /*
  * this class represent a point,for each point we have index i,j

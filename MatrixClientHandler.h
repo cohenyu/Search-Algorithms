@@ -5,7 +5,7 @@
 #include "Solver.h"
 #include "CacheManager.h"
 #include "State.h"
-#include "vector"
+#include <vector>
 #include "Point.h"
 #include "Searchable.h"
 #include "SocketCommunication.h"

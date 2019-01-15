@@ -2,7 +2,7 @@
 #define PROJECT2_MY_ASTAR_H
 
 #include "SearchAlgorithm.h"
-#include "queue"
+#include <queue>
 
 /*
  * this class represent a A* that is kind of search algorithm that heir from Searcher

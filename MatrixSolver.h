@@ -5,8 +5,8 @@
 #include "Solver.h"
 #include "State.h"
 #include "Point.h"
-#include "vector"
-#include "string"
+#include <vector>
+#include <string>
 #include "Searcher.h"
 
 using namespace std;
@@ -21,12 +21,8 @@ public:
     string solve(Searchable<Point> *problem) override;
     string getPath(vector<State<Point>*> States);
 
-    virtual string solveMe(Searchable<Point> *problem);
-
 private:
     string getDirection(Point cur, Point next);
-
-
 };
 
 
