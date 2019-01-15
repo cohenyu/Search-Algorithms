@@ -22,6 +22,7 @@ protected:
     int evaluatedNodes;
     int pathCost;
     virtual vector<State<Node>*> findPath(State<Node> *goal);
+    void initialization();
 
 public:
     SearchAlgorithm(): pathCost(0), evaluatedNodes(0){
@@ -33,6 +34,11 @@ public:
 
 };
 
+template <class Node>
+void SearchAlgorithm<Node>::initialization() {
+    this->evaluatedNodes = 0;
+    this->pathCost = 0;
+}
 
 /*
  * this method get the goal State and return a vector of State<Node>*

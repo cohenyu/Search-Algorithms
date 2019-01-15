@@ -19,7 +19,10 @@ class BreadthFS: public SearchAlgorithm<Node>{
 
 public:
     vector<State<Node>*> search(Searchable<Node> *searchable) override;
-
+    BreadthFS(){
+        this->evaluatedNodes = 0;
+        this->pathCost = 0;
+    }
 };
 
 /*
@@ -27,6 +30,7 @@ public:
  */
 template <class Node>
 vector<State<Node>*>BreadthFS<Node>::search(Searchable<Node> *searchable) {
+    this->initialization();
     //the first state
     State<Node>* curS =searchable->getInitState();
     //the end state

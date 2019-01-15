@@ -25,11 +25,15 @@ class AStar : public SearchAlgorithm<Node> {
 
 public:
 
+    AStar(){
+        this->evaluatedNodes = 0;
+        this->pathCost = 0;
+    }
     /*
     * this method reality the A* algorithm
     */
     vector<State<Node>*> search(Searchable<Node> *searchable) override{
-
+        this->initialization();
         // init state
         State<Node>* curS =searchable->getInitState();
         //the end state
@@ -44,7 +48,9 @@ public:
             //see the object in the front of the queue
             curS = openPQueue.top();
             openPQueue.pop();
-            this->evaluatedNodes ++;
+            if (!curS->getIsMarked()){
+                this->evaluatedNodes ++;
+            }
 
             curS->setIsMarked(true);
             //we check if we arrive the end and found our path
@@ -65,12 +71,11 @@ public:
                     // set the heuristic calculate for this adj state
                     adj->setHeuristicValue(searchable->heuristic(adj));
                     //todo - delete the line in the note below
-
-                    // openPQueue.emplace(adj);
+                    openPQueue.emplace(adj);
                     if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);
                     } else{
-                        openPQueue.emplace(adj);
+                        //openPQueue.emplace(adj);
                     }
                 }
             }

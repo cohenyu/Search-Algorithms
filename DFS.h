@@ -25,7 +25,8 @@ public:
 
 template <class Node>
 DFS<Node>::DFS(): SearchAlgorithm<Node>() {
-
+    this->evaluatedNodes = 0;
+    this->pathCost = 0;
 }
 
 
@@ -34,7 +35,7 @@ DFS<Node>::DFS(): SearchAlgorithm<Node>() {
 */
 template <class Node>
 vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
-
+    this->initialization();
     State<Node>* curS =searchable->getInitState();
     State<Node>* endS =searchable->getGoalState();
 
@@ -52,6 +53,7 @@ vector<State<Node>*> DFS<Node>::search(Searchable<Node> *searchable) {
         curS = stackDfs.top();
         //take the object in the top of the queue
         stackDfs.pop();
+
         this->evaluatedNodes ++;
 
         //we check if we arrive the end and found our path

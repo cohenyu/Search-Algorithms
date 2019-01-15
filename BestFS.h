@@ -18,12 +18,15 @@ class BestFS : public SearchAlgorithm<Node>{
     };
 
 public:
-
+    BestFS(){
+        this->evaluatedNodes = 0;
+        this->pathCost = 0;
+    }
     /*
     * this method reality the Best search first algorithm
     */
     vector<State<Node>*> search(Searchable<Node> *searchable) override {
-
+        this->initialization();
         State<Node>* curS =searchable->getInitState();
         //the end state
         State<Node>* endS =searchable->getGoalState();
@@ -36,10 +39,14 @@ public:
             //see the object in the front of the queue
             curS = openPQueue.top();
             openPQueue.pop();
-            this->evaluatedNodes ++;
+            //this->evaluatedNodes ++;
+            if (!curS->getIsMarked()){
+                this->evaluatedNodes ++;
+            }
 
             curS->setIsMarked(true);
-            //we check if we arrive the end and found our path
+//            curS->setIsMarked(true);
+//            //we check if we arrive the end and found our path
             if(curS->equals(endS)){
                 break;
             }
@@ -55,12 +62,12 @@ public:
                 if(adj->getTotalCost() == INF || adj->getTotalCost() > adjFutureTotalCost){
                     adj->setCameFrom(curS);
                     adj->setTotalCost(adjFutureTotalCost);
-                    //openPQueue.emplace(adj);
+                    openPQueue.emplace(adj);
                     // update the queue order
                     if (adj->getTotalCost() > adjFutureTotalCost) {
                         openPQueue = updatePriorityOrder(openPQueue);
                     } else{
-                        openPQueue.emplace(adj);
+                        //openPQueue.emplace(adj);
                     }
                 }
 

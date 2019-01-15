@@ -67,7 +67,7 @@ Matrix* lexerIt(string str) {
 
 void saveToMyFile(string algo, string solution){
     ofstream outFile;
-    outFile.open("experiment.txt", ios::out | ios::app | ios::ate);
+    outFile.open("AstarTest.txt", ios::out | ios::app | ios::ate);
     if (!outFile.is_open()){
         perror("error opening file");
         exit(1);
@@ -80,7 +80,7 @@ void saveToMyFile(string algo, string solution){
 
 void loadFromFile(){
     ifstream inFile;
-    inFile.open("matrixs.txt");
+    inFile.open("graphs.txt");
 
     //problem with opening the file
     if (inFile.bad()){
@@ -125,12 +125,12 @@ int main(int argc, char** argv) {
 //    MatrixSolver m(bfs);
 
 
-    MatrixSolver m(new AStar<Point>());
-    MatrixClientHandler c(m);
-    server_side::ParallelServer server;
-    server.open(5401,c);
+//    MatrixSolver m(new AStar<Point>());
+//    MatrixClientHandler c(m);
+//    server_side::ParallelServer server;
+//    server.open(5401,c);
 
-// loadFromFile();
+ loadFromFile();
 //  delete bfs;
     return 0;
 }
